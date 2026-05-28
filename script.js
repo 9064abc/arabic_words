@@ -158,6 +158,9 @@ function setupEventListeners() {
     answerInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') submitTypingAnswer();
     });
+    answerInput.addEventListener('input', () => {
+        submitAnswerBtn.disabled = answerInput.value.trim() === '';
+    });
 
     // Results screen
     restartTestBtn.addEventListener('click', () => navigateToPage('test-selection'));
@@ -318,7 +321,7 @@ function displayQuestion() {
         answerFeedback.classList.remove('show');
         answerInput.value = '';
         answerInput.disabled = false;
-        submitAnswerBtn.disabled = appState.answers[questionIndex] === null;
+        submitAnswerBtn.disabled = true;
         answerInput.focus();
     }
 
