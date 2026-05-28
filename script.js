@@ -51,6 +51,8 @@ const prevBtn = document.getElementById('prevBtn');
 // DOM Elements - Results
 const resultsScreen = document.getElementById('resultsScreen');
 const resultsList = document.getElementById('resultsList');
+const scoreValue = document.getElementById('scoreValue');
+const scorePercentage = document.getElementById('scorePercentage');
 const restartTestBtn = document.getElementById('restartTestBtn');
 const backToHomeFromResultsBtn = document.getElementById('backToHomeFromResultsBtn');
 
@@ -111,7 +113,7 @@ function setupEventListeners() {
     });
 
     // Home screen
-    startTestBtn.addEventListener('click', () => navigateToPage('test'));
+    startTestBtn.addEventListener('click', () => navigateToPage('test-selection'));
     myWordsBtn.addEventListener('click', () => {
         navigateToPage('my-words');
         displayMyWords();
@@ -149,7 +151,7 @@ function setupEventListeners() {
     });
 
     // Results screen
-    restartTestBtn.addEventListener('click', () => navigateToPage('test'));
+    restartTestBtn.addEventListener('click', () => navigateToPage('test-selection'));
     backToHomeFromResultsBtn.addEventListener('click', () => navigateToPage('home'));
 
     // My Words
@@ -182,9 +184,13 @@ function navigateToPage(page) {
     // Show selected screen
     if (page === 'home') {
         homeScreen.classList.add('active');
-    } else if (page === 'test') {
+    } else if (page === 'test-selection') {
         testSelectionScreen.classList.add('active');
         updateClassSelection();
+    } else if (page === 'test') {
+        testScreen.classList.add('active');
+    } else if (page === 'results') {
+        resultsScreen.classList.add('active');
     } else if (page === 'my-words') {
         myWordsScreen.classList.add('active');
     }
@@ -491,8 +497,8 @@ function showResults() {
         }
     });
 
-    document.getElementById('scoreValue').textContent = `${correctCount}/${appState.currentTestQuestions.length}`;
-    document.getElementById('scorePercentage').textContent = 
+    scoreValue.textContent = `${correctCount}/${appState.currentTestQuestions.length}`;
+    scorePercentage.textContent = 
         `${Math.round((correctCount / appState.currentTestQuestions.length) * 100)}%`;
     resultsList.innerHTML = resultsHtml;
 
