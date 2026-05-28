@@ -34,7 +34,7 @@ body {
 
 header {
     text-align: center;
-    padding: 40px 0 30px;
+    padding: 40px 0 20px;
 }
 
 header h1 {
@@ -46,6 +46,37 @@ header h1 {
 header .subtitle {
     font-size: 1.1rem;
     color: var(--text-light);
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--border-color);
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.nav-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
 }
 
 .content {
@@ -74,21 +105,89 @@ header .subtitle {
     }
 }
 
-/* Start Screen */
-#startScreen {
+/* Home Screen */
+#homeScreen h2 {
     text-align: center;
-}
-
-#startScreen h2 {
     font-size: 2rem;
     margin-bottom: 20px;
     color: var(--primary-color);
 }
 
-#startScreen p {
-    font-size: 1.1rem;
+#homeScreen p {
+    text-align: center;
     margin-bottom: 40px;
     color: var(--text-light);
+}
+
+.home-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.btn-large {
+    padding: 20px 40px;
+    font-size: 1.1rem;
+}
+
+/* Test Selection Screen */
+.test-source-selection,
+.mode-selection,
+.answer-mode-selection {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+}
+
+.test-source-selection h3,
+.mode-selection h3,
+.answer-mode-selection h3 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.radio-option input {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.radio-option span {
+    cursor: pointer;
+}
+
+.class-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--card-background);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.checkbox-option input {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.checkbox-option span {
+    cursor: pointer;
 }
 
 /* Test Screen */
@@ -118,7 +217,8 @@ header .subtitle {
     margin: 40px 0;
 }
 
-.question-arabic {
+.question-display {
+    font-family: 'Scheherazade New', serif;
     font-size: 3rem;
     text-align: center;
     margin-bottom: 30px;
@@ -128,6 +228,7 @@ header .subtitle {
     font-weight: 600;
     color: var(--primary-color);
     direction: rtl;
+    line-height: 1.8;
 }
 
 .question-label {
@@ -137,6 +238,15 @@ header .subtitle {
     font-size: 1rem;
 }
 
+.answer-mode {
+    display: none;
+}
+
+.answer-mode.active {
+    display: block;
+}
+
+/* Multiple Choice Mode */
 .options {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -159,6 +269,11 @@ header .subtitle {
     font-size: 1rem;
     transition: all 0.2s ease;
     text-align: center;
+    font-family: 'Scheherazade New', serif;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .option-btn:hover {
@@ -188,11 +303,75 @@ header .subtitle {
     cursor: not-allowed;
 }
 
+/* Typing Mode */
+.answer-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-family: 'Scheherazade New', serif;
+    direction: auto;
+}
+
+.answer-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+#submitAnswerBtn {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.answer-feedback {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.answer-feedback.show {
+    display: block;
+}
+
+.answer-feedback.correct {
+    background-color: #ecfdf5;
+    border-left: 4px solid var(--success-color);
+    color: #065f46;
+}
+
+.answer-feedback.incorrect {
+    background-color: #fef2f2;
+    border-left: 4px solid var(--error-color);
+    color: #7f1d1d;
+}
+
+.answer-feedback strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.answer-feedback .correct-answer {
+    font-family: 'Scheherazade New', serif;
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
 .navigation {
     display: flex;
     gap: 15px;
     justify-content: center;
     margin-top: 40px;
+}
+
+.results-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
 }
 
 /* Results Screen */
@@ -245,12 +424,19 @@ header .subtitle {
     border-left-color: var(--error-color);
 }
 
-.result-item-word {
+.result-item-question {
+    font-family: 'Scheherazade New', serif;
     font-size: 1.2rem;
     font-weight: 600;
     direction: rtl;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     color: var(--text-color);
+}
+
+.result-item-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 5px;
 }
 
 .result-item-details {
@@ -260,6 +446,134 @@ header .subtitle {
 
 .result-item-details p {
     margin: 3px 0;
+}
+
+.result-item-answer {
+    font-family: 'Scheherazade New', serif;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* My Words Screen */
+.my-words-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.my-words-filter {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.my-words-filter h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+#clearFilterBtn {
+    margin-top: 10px;
+}
+
+.add-word-form {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.add-word-form h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: 'Scheherazade New', serif;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-small {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+.my-words-list {
+    display: grid;
+    gap: 15px;
+}
+
+.word-card {
+    background-color: var(--background-color);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.word-arabic {
+    font-family: 'Scheherazade New', serif;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    direction: rtl;
+    margin-bottom: 8px;
+}
+
+.word-details {
+    display: grid;
+    gap: 5px;
+    font-size: 0.9rem;
+}
+
+.word-details-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.word-class-badge {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-top: 8px;
+}
+
+.word-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-delete {
+    background-color: var(--error-color);
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.btn-delete:hover {
+    background-color: #b91c1c;
 }
 
 /* Buttons */
@@ -312,15 +626,37 @@ header .subtitle {
         padding: 20px;
     }
 
-    .question-arabic {
+    .question-display {
         font-size: 2rem;
     }
 
-    .navigation {
+    .navigation,
+    .results-navigation {
         flex-direction: column;
     }
 
-    .btn {
+    .btn,
+    #submitAnswerBtn {
+        width: 100%;
+    }
+
+    .my-words-controls {
+        flex-direction: column;
+    }
+
+    .my-words-controls .btn {
+        width: 100%;
+    }
+
+    .class-checkboxes {
+        grid-template-columns: 1fr;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .form-buttons .btn {
         width: 100%;
     }
 }
