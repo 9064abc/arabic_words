@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arabic Words Test</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Beautiful Arabic Font with Diacritics -->
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -13,12 +15,84 @@
             <p class="subtitle">アラビア語単語テスト</p>
         </header>
 
+        <nav class="main-nav">
+            <button class="nav-btn active" data-page="home">Home</button>
+            <button class="nav-btn" data-page="test">Test</button>
+            <button class="nav-btn" data-page="my-words">My Words</button>
+        </nav>
+
         <div class="content">
-            <!-- Start Screen -->
-            <div id="startScreen" class="screen active">
-                <h2>ようこそ！</h2>
-                <p>アラビア語の単語テストを開始します。</p>
-                <button id="startBtn" class="btn btn-primary">Start Test</button>
+            <!-- Home Screen -->
+            <div id="homeScreen" class="screen active">
+                <h2>Welcome!</h2>
+                <p>Choose an option to get started:</p>
+                <div class="home-buttons">
+                    <button id="startTestBtn" class="btn btn-primary btn-large">
+                        📝 Start Test
+                    </button>
+                    <button id="myWordsBtn" class="btn btn-secondary btn-large">
+                        ⭐ My Words
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test Selection Screen -->
+            <div id="testSelectionScreen" class="screen">
+                <h2>Select Test Mode</h2>
+                <p>Choose which words to test:</p>
+                
+                <div class="test-source-selection">
+                    <label class="radio-option">
+                        <input type="radio" name="testSource" value="default" checked>
+                        <span>Default Words (Provided)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="testSource" value="custom">
+                        <span>My Words (Custom)</span>
+                    </label>
+                </div>
+
+                <div id="classSelection" style="display: none;">
+                    <h3>Select Classes (Multi-select allowed):</h3>
+                    <div id="classCheckboxes" class="class-checkboxes"></div>
+                </div>
+
+                <div class="mode-selection">
+                    <h3>Choose Question Type:</h3>
+                    <label class="radio-option">
+                        <input type="radio" name="questionMode" value="mixed" checked>
+                        <span>Mixed (Arabic→Japanese & Japanese→Arabic)</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="questionMode" value="a-to-j">
+                        <span>Arabic → Japanese</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="questionMode" value="j-to-a">
+                        <span>Japanese → Arabic</span>
+                    </label>
+                </div>
+
+                <div class="answer-mode-selection">
+                    <h3>Choose Answer Mode:</h3>
+                    <label class="radio-option">
+                        <input type="radio" name="answerMode" value="multiple-choice" checked>
+                        <span>Multiple Choice</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="answerMode" value="typing">
+                        <span>Typing</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="answerMode" value="both">
+                        <span>Both (Random per question)</span>
+                    </label>
+                </div>
+
+                <div class="navigation">
+                    <button id="backToHomeBtn" class="btn btn-secondary">Back</button>
+                    <button id="startTestFromSelectionBtn" class="btn btn-primary">Start Test</button>
+                </div>
             </div>
 
             <!-- Test Screen -->
@@ -29,10 +103,20 @@
                 <p class="progress-text">Question <span id="currentQuestion">1</span>/<span id="totalQuestions">10</span></p>
 
                 <div class="question-container">
-                    <div class="question-arabic" id="questionWord"></div>
-                    <p class="question-label">The meaning of this word is:</p>
+                    <div class="question-display" id="questionDisplay"></div>
+                    <p class="question-label" id="questionLabel"></p>
 
-                    <div class="options" id="optionsContainer"></div>
+                    <!-- Multiple Choice Mode -->
+                    <div id="multipleChoiceMode" class="answer-mode">
+                        <div class="options" id="optionsContainer"></div>
+                    </div>
+
+                    <!-- Typing Mode -->
+                    <div id="typingMode" class="answer-mode">
+                        <input type="text" id="answerInput" class="answer-input" placeholder="Type your answer...">
+                        <button id="submitAnswerBtn" class="btn btn-primary">Submit Answer</button>
+                        <div id="answerFeedback" class="answer-feedback"></div>
+                    </div>
                 </div>
 
                 <div class="navigation">
@@ -51,7 +135,46 @@
 
                 <div id="resultsList" class="results-list"></div>
 
-                <button id="restartBtn" class="btn btn-primary">Take Test Again</button>
+                <div class="results-navigation">
+                    <button id="restartTestBtn" class="btn btn-primary">Take Test Again</button>
+                    <button id="backToHomeFromResultsBtn" class="btn btn-secondary">Back to Home</button>
+                </div>
+            </div>
+
+            <!-- My Words Screen -->
+            <div id="myWordsScreen" class="screen">
+                <h2>My Words</h2>
+                
+                <div class="my-words-controls">
+                    <button id="addWordBtn" class="btn btn-primary">➕ Add New Word</button>
+                    <button id="exportWordsBtn" class="btn btn-secondary">📥 Export to CSV</button>
+                    <button id="importWordsBtn" class="btn btn-secondary">📤 Import from CSV</button>
+                    <input type="file" id="csvFileInput" style="display: none;" accept=".csv">
+                </div>
+
+                <div class="my-words-filter">
+                    <h3>Filter by Class:</h3>
+                    <div id="filterCheckboxes" class="class-checkboxes"></div>
+                    <button id="clearFilterBtn" class="btn btn-small">Clear Filter</button>
+                </div>
+
+                <div id="addWordForm" class="add-word-form" style="display: none;">
+                    <h3>Add New Word</h3>
+                    <input type="text" id="newArabicWord" placeholder="Arabic word (e.g., مَاء)" class="form-input">
+                    <input type="text" id="newEnglishMeaning" placeholder="English meaning" class="form-input">
+                    <input type="text" id="newJapaneseMeaning" placeholder="Japanese meaning (漢字)" class="form-input">
+                    <input type="text" id="newTransliteration" placeholder="Transliteration (optional)" class="form-input">
+                    <select id="newWordClass" class="form-input">
+                        <option value="">Select or create class...</option>
+                    </select>
+                    <input type="text" id="newCustomClass" placeholder="Or type new class name..." class="form-input">
+                    <div class="form-buttons">
+                        <button id="saveWordBtn" class="btn btn-primary btn-small">Save</button>
+                        <button id="cancelAddWordBtn" class="btn btn-secondary btn-small">Cancel</button>
+                    </div>
+                </div>
+
+                <div id="myWordsList" class="my-words-list"></div>
             </div>
         </div>
     </div>
