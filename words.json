@@ -1,122 +1,162 @@
 [
     {
         "id": 1,
-        "word": "السلام",
+        "word": "السَّلَام",
         "meaning": "Peace",
-        "transliteration": "As-salaam"
+        "japanese": "平和",
+        "transliteration": "As-salaam",
+        "class": "Greetings"
     },
     {
         "id": 2,
-        "word": "حب",
+        "word": "حُب",
         "meaning": "Love",
-        "transliteration": "Hubb"
+        "japanese": "愛",
+        "transliteration": "Hubb",
+        "class": "Emotions"
     },
     {
         "id": 3,
-        "word": "ماء",
+        "word": "مَاء",
         "meaning": "Water",
-        "transliteration": "Maa"
+        "japanese": "水",
+        "transliteration": "Maa",
+        "class": "Nature"
     },
     {
         "id": 4,
-        "word": "شمس",
+        "word": "شَمْس",
         "meaning": "Sun",
-        "transliteration": "Shams"
+        "japanese": "太陽",
+        "transliteration": "Shams",
+        "class": "Nature"
     },
     {
         "id": 5,
-        "word": "قمر",
+        "word": "قَمَر",
         "meaning": "Moon",
-        "transliteration": "Qamar"
+        "japanese": "月",
+        "transliteration": "Qamar",
+        "class": "Nature"
     },
     {
         "id": 6,
-        "word": "كتاب",
+        "word": "كِتَاب",
         "meaning": "Book",
-        "transliteration": "Kitaab"
+        "japanese": "本",
+        "transliteration": "Kitaab",
+        "class": "Objects"
     },
     {
         "id": 7,
-        "word": "مدرسة",
+        "word": "مَدْرَسَة",
         "meaning": "School",
-        "transliteration": "Madrasa"
+        "japanese": "学校",
+        "transliteration": "Madrasa",
+        "class": "Places"
     },
     {
         "id": 8,
-        "word": "عائلة",
+        "word": "عَائِلَة",
         "meaning": "Family",
-        "transliteration": "Aa'ila"
+        "japanese": "家族",
+        "transliteration": "Aa'ila",
+        "class": "People"
     },
     {
         "id": 9,
-        "word": "صديق",
+        "word": "صَدِيق",
         "meaning": "Friend",
-        "transliteration": "Sadeeq"
+        "japanese": "友人",
+        "transliteration": "Sadeeq",
+        "class": "People"
     },
     {
         "id": 10,
-        "word": "نجم",
+        "word": "نَجْم",
         "meaning": "Star",
-        "transliteration": "Najm"
+        "japanese": "星",
+        "transliteration": "Najm",
+        "class": "Nature"
     },
     {
         "id": 11,
-        "word": "زهرة",
+        "word": "زَهْرَة",
         "meaning": "Flower",
-        "transliteration": "Zahra"
+        "japanese": "花",
+        "transliteration": "Zahra",
+        "class": "Nature"
     },
     {
         "id": 12,
-        "word": "طعام",
+        "word": "طَعَام",
         "meaning": "Food",
-        "transliteration": "Taam"
+        "japanese": "食べ物",
+        "transliteration": "Taam",
+        "class": "Daily Life"
     },
     {
         "id": 13,
-        "word": "شراب",
+        "word": "شَرَاب",
         "meaning": "Drink",
-        "transliteration": "Sharaab"
+        "japanese": "飲み物",
+        "transliteration": "Sharaab",
+        "class": "Daily Life"
     },
     {
         "id": 14,
-        "word": "عيون",
+        "word": "عُيُون",
         "meaning": "Eyes",
-        "transliteration": "Uyoon"
+        "japanese": "目",
+        "transliteration": "Uyoon",
+        "class": "Body Parts"
     },
     {
         "id": 15,
-        "word": "قلب",
+        "word": "قَلْب",
         "meaning": "Heart",
-        "transliteration": "Qalb"
+        "japanese": "心臓",
+        "transliteration": "Qalb",
+        "class": "Body Parts"
     },
     {
         "id": 16,
-        "word": "يد",
+        "word": "يَد",
         "meaning": "Hand",
-        "transliteration": "Yad"
+        "japanese": "手",
+        "transliteration": "Yad",
+        "class": "Body Parts"
     },
     {
         "id": 17,
-        "word": "رأس",
+        "word": "رَأْس",
         "meaning": "Head",
-        "transliteration": "Raas"
+        "japanese": "頭",
+        "transliteration": "Raas",
+        "class": "Body Parts"
     },
     {
         "id": 18,
-        "word": "رجل",
+        "word": "رِجْل",
         "meaning": "Leg",
-        "transliteration": "Rijl"
+        "japanese": "脚",
+        "transliteration": "Rijl",
+        "class": "Body Parts"
     },
     {
         "id": 19,
-        "word": "أذن",
+        "word": "أُذُن",
         "meaning": "Ear",
-        "transliteration": "Udhn"
+        "japanese": "耳",
+        "transliteration": "Udhn",
+        "class": "Body Parts"
     },
     {
         "id": 20,
-        "word": "أنف",
+        "word": "أَنْف",
         "meaning": "Nose",
-        "transliteration": "Anf"
+        "japanese": "鼻",
+        "transliteration": "Anf",
+        "class": "Body Parts"
     }
 ]
