@@ -6,6 +6,7 @@ let appState = {
     answers: [],
     questionsPerTest: 10,
     currentTestQuestions: [],
+    testInProgress: false, // Track if test is active
     testConfig: {
         source: 'default', // 'default' or 'custom'
         questionMode: 'mixed', // 'mixed', 'a-to-j', 'j-to-a'
@@ -109,7 +110,15 @@ function saveCustomWords() {
 function setupEventListeners() {
     // Navigation
     navBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => navigateToPage(e.target.dataset.page));
+        btn.addEventListener('click', (e) => {
+            const page = e.target.dataset.page;
+            // If clicking Test nav but no test in progress, go to test selection
+            if (page === 'test' && !appState.testInProgress) {
+                navigateToPage('test-selection');
+            } else {
+                navigateToPage(page);
+            }
+        });
     });
 
     // Home screen
@@ -184,9 +193,11 @@ function navigateToPage(page) {
     // Show selected screen
     if (page === 'home') {
         homeScreen.classList.add('active');
+        appState.testInProgress = false;
     } else if (page === 'test-selection') {
         testSelectionScreen.classList.add('active');
         updateClassSelection();
+        appState.testInProgress = false;
     } else if (page === 'test') {
         testScreen.classList.add('active');
     } else if (page === 'results') {
@@ -243,6 +254,7 @@ function startTest() {
     appState.currentTestQuestions = [];
     appState.answers = new Array(numQuestions).fill(null);
     appState.currentQuestionIndex = 0;
+    appState.testInProgress = true;
 
     for (let i = 0; i < numQuestions; i++) {
         const word = words[Math.floor(Math.random() * words.length)];
@@ -306,14 +318,14 @@ function displayQuestion() {
         answerFeedback.classList.remove('show');
         answerInput.value = '';
         answerInput.disabled = false;
-        submitAnswerBtn.disabled = false;
+        submitAnswerBtn.disabled = appState.answers[questionIndex] === null;
         answerInput.focus();
     }
 
     // Update button states
     const isLastQuestion = questionIndex === appState.currentTestQuestions.length - 1;
     prevBtn.disabled = questionIndex === 0;
-    nextBtn.disabled = isLastQuestion && appState.answers[questionIndex] === null;
+    nextBtn.disabled = appState.answers[questionIndex] === null;
     nextBtn.textContent = isLastQuestion ? 'Submit' : 'Next';
 }
 
@@ -498,6 +510,7 @@ function showResults() {
     scorePercentage.textContent = 
         `${Math.round((correctCount / appState.currentTestQuestions.length) * 100)}%`;
     resultsList.innerHTML = resultsHtml;
+    appState.testInProgress = false;
 
     navigateToPage('results');
 }
