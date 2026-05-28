@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "word": "السلام",
+        "meaning": "Peace",
+        "transliteration": "As-salaam"
+    },
+    {
+        "id": 2,
+        "word": "حب",
+        "meaning": "Love",
+        "transliteration": "Hubb"
+    },
+    {
+        "id": 3,
+        "word": "ماء",
+        "meaning": "Water",
+        "transliteration": "Maa"
+    },
+    {
+        "id": 4,
+        "word": "شمس",
+        "meaning": "Sun",
+        "transliteration": "Shams"
+    },
+    {
+        "id": 5,
+        "word": "قمر",
+        "meaning": "Moon",
+        "transliteration": "Qamar"
+    },
+    {
+        "id": 6,
+        "word": "كتاب",
+        "meaning": "Book",
+        "transliteration": "Kitaab"
+    },
+    {
+        "id": 7,
+        "word": "مدرسة",
+        "meaning": "School",
+        "transliteration": "Madrasa"
+    },
+    {
+        "id": 8,
+        "word": "عائلة",
+        "meaning": "Family",
+        "transliteration": "Aa'ila"
+    },
+    {
+        "id": 9,
+        "word": "صديق",
+        "meaning": "Friend",
+        "transliteration": "Sadeeq"
+    },
+    {
+        "id": 10,
+        "word": "نجم",
+        "meaning": "Star",
+        "transliteration": "Najm"
+    },
+    {
+        "id": 11,
+        "word": "زهرة",
+        "meaning": "Flower",
+        "transliteration": "Zahra"
+    },
+    {
+        "id": 12,
+        "word": "طعام",
+        "meaning": "Food",
+        "transliteration": "Taam"
+    },
+    {
+        "id": 13,
+        "word": "شراب",
+        "meaning": "Drink",
+        "transliteration": "Sharaab"
+    },
+    {
+        "id": 14,
+        "word": "عيون",
+        "meaning": "Eyes",
+        "transliteration": "Uyoon"
+    },
+    {
+        "id": 15,
+        "word": "قلب",
+        "meaning": "Heart",
+        "transliteration": "Qalb"
+    },
+    {
+        "id": 16,
+        "word": "يد",
+        "meaning": "Hand",
+        "transliteration": "Yad"
+    },
+    {
+        "id": 17,
+        "word": "رأس",
+        "meaning": "Head",
+        "transliteration": "Raas"
+    },
+    {
+        "id": 18,
+        "word": "رجل",
+        "meaning": "Leg",
+        "transliteration": "Rijl"
+    },
+    {
+        "id": 19,
+        "word": "أذن",
+        "meaning": "Ear",
+        "transliteration": "Udhn"
+    },
+    {
+        "id": 20,
+        "word": "أنف",
+        "meaning": "Nose",
+        "transliteration": "Anf"
+    }
+]
