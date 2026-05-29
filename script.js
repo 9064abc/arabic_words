@@ -401,9 +401,15 @@ function selectMultipleChoiceAnswer(wordId) {
         }
     });
 
-    // Auto move to next
-    if (appState.currentQuestionIndex < appState.currentTestQuestions.length - 1) {
+    // Check if this is the last question
+    const isLastQuestion = appState.currentQuestionIndex === appState.currentTestQuestions.length - 1;
+    
+    // Auto move to next, or if on last question, enable the Submit button
+    if (!isLastQuestion) {
         setTimeout(() => goToNextQuestion(), 800);
+    } else {
+        // Enable the Submit button on the last question after answer is selected
+        nextBtn.disabled = false;
     }
 }
 
