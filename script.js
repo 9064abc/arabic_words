@@ -321,7 +321,12 @@ function displayQuestion() {
         answerFeedback.classList.remove('show');
         answerInput.value = '';
         answerInput.disabled = false;
-        submitAnswerBtn.disabled = true;
+        // Check if this question was previously answered to restore the input
+        if (appState.answers[questionIndex] !== null && appState.answers[questionIndex] !== 0 && appState.answers[questionIndex] !== 1) {
+            answerInput.value = appState.answers[questionIndex];
+        }
+        // Update button state based on input content
+        submitAnswerBtn.disabled = answerInput.value.trim() === '';
         answerInput.focus();
     }
 
