@@ -124,8 +124,8 @@ function setupEventListeners() {
     // Home screen
     startTestBtn.addEventListener('click', () => navigateToPage('test-selection'));
     myWordsBtn.addEventListener('click', () => {
-        navigateToPage('my-words');
-        displayMyWords();
+        addWordForm.style.display = addWordForm.style.display === 'none' ? 'block' : 'none';
+        updateClassOptions();
     });
 
     // Test selection
@@ -207,6 +207,7 @@ function navigateToPage(page) {
         resultsScreen.classList.add('active');
     } else if (page === 'my-words') {
         myWordsScreen.classList.add('active');
+        displayMyWords();
     }
 }
 
