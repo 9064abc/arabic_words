@@ -12,7 +12,8 @@ let appState = {
         questionMode: 'mixed', // 'mixed', 'a-to-j', 'j-to-a'
         answerMode: 'multiple-choice', // 'multiple-choice', 'typing', 'both'
         selectedClasses: []
-    }
+    },
+    editingWordId: null // Track which word is being edited
 };
 
 // DOM Elements - Navigation
@@ -75,6 +76,7 @@ const cancelAddWordBtn = document.getElementById('cancelAddWordBtn');
 const myWordsList = document.getElementById('myWordsList');
 const filterCheckboxes = document.getElementById('filterCheckboxes');
 const clearFilterBtn = document.getElementById('clearFilterBtn');
+const myWordsCounter = document.getElementById('myWordsCounter');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -168,12 +170,15 @@ function setupEventListeners() {
 
     // My Words
     addWordBtn.addEventListener('click', () => {
+        appState.editingWordId = null;
+        clearWordForm();
         addWordForm.style.display = addWordForm.style.display === 'none' ? 'block' : 'none';
         updateClassOptions();
     });
     saveWordBtn.addEventListener('click', saveNewWord);
     cancelAddWordBtn.addEventListener('click', () => {
         addWordForm.style.display = 'none';
+        appState.editingWordId = null;
         clearWordForm();
     });
     exportWordsBtn.addEventListener('click', exportWordsToCSV);
@@ -534,6 +539,7 @@ function showResults() {
 function displayMyWords() {
     renderMyWordsList();
     renderFilterCheckboxes();
+    updateWordCounter();
 }
 
 function renderMyWordsList(filterClasses = null) {
@@ -545,8 +551,13 @@ function renderMyWordsList(filterClasses = null) {
 
     myWordsList.innerHTML = '';
 
-    if (words.length === 0) {
+    if (appState.customWords.length === 0) {
         myWordsList.innerHTML = '<p style="text-align: center; color: var(--text-light);">No words added yet. Add your first word!</p>';
+        return;
+    }
+
+    if (words.length === 0) {
+        myWordsList.innerHTML = '<p style="text-align: center; color: var(--text-light);">No words match the selected filters.</p>';
         return;
     }
 
@@ -568,7 +579,8 @@ function renderMyWordsList(filterClasses = null) {
                 <span class="word-class-badge">${word.class}</span>
             </div>
             <div class="word-card-actions">
-                <button class="btn-delete" onclick="deleteWord(${word.id})">Delete</button>
+                <button class="btn-edit" onclick="editWord(${word.id})">✏️ Edit</button>
+                <button class="btn-delete" onclick="deleteWord(${word.id})">🗑️ Delete</button>
             </div>
         `;
         myWordsList.appendChild(card);
@@ -594,13 +606,29 @@ function renderFilterCheckboxes() {
         checkbox.addEventListener('change', () => {
             const selected = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(cb => cb.value);
             renderMyWordsList(selected.length > 0 ? selected : null);
+            updateWordCounter(selected.length > 0 ? selected : null);
         });
     });
+}
+
+function updateWordCounter(filterClasses = null) {
+    let displayedCount = appState.customWords.length;
+    
+    if (filterClasses && filterClasses.length > 0) {
+        displayedCount = appState.customWords.filter(w => filterClasses.includes(w.class)).length;
+    }
+    
+    const totalCount = appState.customWords.length;
+    
+    if (myWordsCounter) {
+        myWordsCounter.textContent = `(${displayedCount}/${totalCount})`;
+    }
 }
 
 function clearClassFilter() {
     document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
     renderMyWordsList();
+    updateWordCounter();
 }
 
 function updateClassOptions() {
@@ -612,6 +640,35 @@ function updateClassOptions() {
         option.textContent = cls;
         newWordClass.appendChild(option);
     });
+}
+
+// Check for duplicate words
+function checkDuplicate(arabic, japanese, excludeId = null) {
+    return appState.customWords.some(word => {
+        // If we're editing, exclude the current word
+        if (excludeId && word.id === excludeId) {
+            return false;
+        }
+        return word.word === arabic || word.japanese === japanese;
+    });
+}
+
+function editWord(id) {
+    const word = appState.customWords.find(w => w.id === id);
+    if (!word) return;
+
+    appState.editingWordId = id;
+    newArabicWord.value = word.word;
+    newEnglishMeaning.value = word.meaning;
+    newJapaneseMeaning.value = word.japanese;
+    newTransliteration.value = word.transliteration || '';
+    newWordClass.value = word.class;
+    newCustomClass.value = '';
+    updateClassOptions();
+    newWordClass.value = word.class;
+    
+    addWordForm.style.display = 'block';
+    newArabicWord.focus();
 }
 
 function saveNewWord() {
@@ -626,21 +683,47 @@ function saveNewWord() {
         return;
     }
 
-    const newWord = {
-        id: appState.customWords.length > 0 ? Math.max(...appState.customWords.map(w => w.id)) + 1 : 1,
-        word: arabic,
-        meaning: english,
-        japanese: japanese,
-        transliteration: transliteration,
-        class: selectedClass
-    };
+    // Check for duplicates (excluding current word if editing)
+    if (checkDuplicate(arabic, japanese, appState.editingWordId)) {
+        const proceed = confirm('This Arabic word or Japanese translation already exists. Continue anyway?');
+        if (!proceed) {
+            return;
+        }
+    }
 
-    appState.customWords.push(newWord);
+    if (appState.editingWordId) {
+        // Update existing word
+        const wordIndex = appState.customWords.findIndex(w => w.id === appState.editingWordId);
+        if (wordIndex !== -1) {
+            appState.customWords[wordIndex] = {
+                id: appState.editingWordId,
+                word: arabic,
+                meaning: english,
+                japanese: japanese,
+                transliteration: transliteration,
+                class: selectedClass
+            };
+        }
+        appState.editingWordId = null;
+    } else {
+        // Add new word
+        const newWord = {
+            id: appState.customWords.length > 0 ? Math.max(...appState.customWords.map(w => w.id)) + 1 : 1,
+            word: arabic,
+            meaning: english,
+            japanese: japanese,
+            transliteration: transliteration,
+            class: selectedClass
+        };
+        appState.customWords.push(newWord);
+    }
+
     saveCustomWords();
     clearWordForm();
     addWordForm.style.display = 'none';
     renderMyWordsList();
     renderFilterCheckboxes();
+    updateWordCounter();
 }
 
 function clearWordForm() {
@@ -657,6 +740,8 @@ function deleteWord(id) {
         appState.customWords = appState.customWords.filter(w => w.id !== id);
         saveCustomWords();
         renderMyWordsList();
+        renderFilterCheckboxes();
+        updateWordCounter();
     }
 }
 
@@ -728,6 +813,7 @@ function importWordsFromCSV(event) {
         alert(`Imported ${importedCount} words successfully!`);
         renderMyWordsList();
         renderFilterCheckboxes();
+        updateWordCounter();
         csvFileInput.value = '';
     };
 
