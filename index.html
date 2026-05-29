@@ -143,7 +143,7 @@
 
             <!-- My Words Screen -->
             <div id="myWordsScreen" class="screen">
-                <h2>My Words</h2>
+                <h2>My Words <span id="myWordsCounter" style="font-size: 0.8em; color: var(--text-light);"></span></h2>
                 
                 <div class="my-words-controls">
                     <button id="addWordBtn" class="btn btn-primary">➕ Add New Word</button>
@@ -162,7 +162,7 @@
                     <h3>Add New Word</h3>
                     <input type="text" id="newArabicWord" placeholder="Arabic word (e.g., مَاء)" class="form-input">
                     <input type="text" id="newEnglishMeaning" placeholder="English meaning" class="form-input">
-                    <input type="text" id="newJapaneseMeaning" placeholder="Japanese meaning" class="form-input">
+                    <input type="text" id="newJapaneseMeaning" placeholder="Japanese meaning (漢字)" class="form-input">
                     <input type="text" id="newTransliteration" placeholder="Transliteration (optional)" class="form-input">
                     <select id="newWordClass" class="form-input">
                         <option value="">Select or create class...</option>
